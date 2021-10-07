@@ -1,0 +1,30 @@
+class Type<DbType> {
+    read(): DbType
+    write(value: DbType)
+}
+
+class StringType<Text> {
+    read(): Text
+    write(value: Text)
+}
+
+
+class ClassType {
+  
+}
+
+ClassType --|> Type
+StringType --|> Type
+
+class FormalProperty {
+    name: string
+    type: Type
+    nullable: boolean
+}
+
+class Object {
+
+}
+
+FormalProperty o-- Type : its type
+ClassType *-- FormalProperty : its properties
