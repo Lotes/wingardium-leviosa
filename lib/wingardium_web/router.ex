@@ -20,6 +20,12 @@ defmodule WingardiumWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/meta", WingardiumWeb do
+    pipe_through :browser
+
+    resources "/tags", Meta.TagController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", WingardiumWeb do
   #   pipe_through :api
