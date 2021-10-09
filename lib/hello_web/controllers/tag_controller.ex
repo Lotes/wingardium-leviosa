@@ -6,16 +6,22 @@ defmodule HelloWeb.TagController do
 
   action_fallback HelloWeb.FallbackController
 
+  def ui(conn, _params) do
+    tags = Meta.list_tags()
+    render(conn, "index.html", %{
+      tags: tags
+    })
+  end
+
   def index(conn, _params) do
     tags = Meta.list_tags()
     render(conn, "index.json", tags: tags)
   end
 
-  def create(conn, %{"tag" => tag_params}) do
-    with {:ok, %Tag{} = tag} <- Meta.create_tag(tag_params) do
+  def create(conn, %{"name" => name}) do
+    with {:ok, %Tag{} = tag} <- Meta.create_tag(%{name: name}) do
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.tag_path(conn, :show, tag))
+      |> redirect(to: Routes.tag_path(conn, :ui))
       |> render("show.json", tag: tag)
     end
   end
