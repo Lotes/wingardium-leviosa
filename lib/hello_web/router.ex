@@ -20,10 +20,10 @@ defmodule HelloWeb.Router do
     get "/", PageController, :index
   end
 
-  scope "/admin/tags", HelloWeb do
+  scope "/live", HelloWeb do
     pipe_through :browser
 
-    get "/", TagController, :ui
+    live "/tags", TagLive, :live
   end
 
   scope "/api/tags", HelloWeb do

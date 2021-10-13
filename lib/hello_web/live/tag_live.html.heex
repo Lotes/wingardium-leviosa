@@ -1,0 +1,19 @@
+<section>
+  <h1>Tags</h1>
+  <form action="#" phx-submit="add">
+    <%= text_input :tag, :name, placeholder: "Enter a name..." %>
+    <%= submit "Add", phx_disable_with: "Adding..." %>
+  </form>
+
+  <ul>
+   <%= for tag <- @tags do %>
+     <li>
+       <%= tag.name %>
+      <form action="#" phx-submit="delete">
+        <%= hidden_input(:tag, :id, value: tag.id) %>
+        <%= submit "Delete" %>
+      </form>
+     </li>
+   <% end %>
+  </ul>
+</section>

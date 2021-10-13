@@ -53,6 +53,7 @@ defmodule Hello.Meta do
     %Tag{}
     |> Tag.changeset(attrs)
     |> Repo.insert()
+    |> broadcast_change([:tag, :created])
   end
 
   @doc """
@@ -71,6 +72,7 @@ defmodule Hello.Meta do
     tag
     |> Tag.changeset(attrs)
     |> Repo.update()
+    |> broadcast_change([:tag, :updated])
   end
 
   @doc """
@@ -87,6 +89,7 @@ defmodule Hello.Meta do
   """
   def delete_tag(%Tag{} = tag) do
     Repo.delete(tag)
+    |> broadcast_change([:tag, :deleted])
   end
 
   @doc """
@@ -100,5 +103,17 @@ defmodule Hello.Meta do
   """
   def change_tag(%Tag{} = tag, attrs \\ %{}) do
     Tag.changeset(tag, attrs)
+  end
+
+  @topic inspect(__MODULE__)
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(Hello.PubSub, @topic)
+  end
+
+  defp broadcast_change({:ok, result}, event) do
+    Phoenix.PubSub.broadcast(Hello.PubSub, @topic, {__MODULE__, event, result})
+
+    {:ok, result}
   end
 end
