@@ -1,53 +1,50 @@
-defmodule Meta.TypeSystemServer do
-  use GenServer
+defmodule Meta.TypeSystem do
+  defmodule TypeNameAlreadyExists do
+    defexception [:message]
 
-  ### GenServer callbacks ###
-  @impl true
-  def init(_init_arg) do
-    {:ok, %{}}
-  end
-
-  @impl true
-  def handle_call(_request, _caller, state) do
-    {:reply, nil,  state}
-  end
-
-  @impl true
-  def handle_cast(_request, state) do
-    {:noreply, state}
-  end
-end
-
-defmodule Meta.TypeSystemBuilder do
-
-end
-
-defmodule Meta.TypeBuilder do
-  def new() do
-    %{
-      :props => %{},
-      :params => %{},
-      :supers => %{}
-    }
-  end
-
-  def add_property(type, property_name, new_property) do
-    props = Map.fetch!(type, :props)
-    case Map.fetch!(props, property_name) do
-      {:ok, _} -> :error
-      :error ->
-        new_props = Map.put(props, property_name, new_property)
-        Map.put(type, :props, new_props)
+    @impl true
+    def exception(value) do
+      msg = "A type named '#{inspect(value)}' already exists!"
+      %__MODULE__{message: msg}
     end
   end
 
-  def remove_property(type, property_name) do
-    props = Map.fetch!(type, :props)
-    new_props = Map.delete(props, property_name)
-    Map.put(type, :props, new_props)
+  def new() do
+    %{
+      :types => %{
+        #{:name} -> ???
+      },
+      :props => %{
+        #{:type_name, :property_name} -> %{
+        #  :tags => property_tags...,
+        #  :compute? => fn/3(type, property, instance) or list_of_commands
+        #  :type => type
+        #}
+
+        #property_tags = [
+        # :nullable, :public
+        #]
+      },
+      :deps => %{
+        #{:from_name, :to_name, :dep_type} -> data
+        # dep_type # data
+        # :base  -> :to extends :from
+        # :iface -> :to implements :from
+      }
+    }
   end
-end
 
-defmodule Meta.PropertyBuilder do
-
+  def new_type(type_system, type_name)
+    when is_atom(type_name) do
+      types = type_system.types
+      case Map.fetch(types, type_name)  do
+        {:ok, _} -> raise TypeNameAlreadyExists, type_name
+        _ ->
+          type = %{
+            :props => %{},
+          }
+          new_types = Map.put(type_system, type_name, type)
+          Map.put(type_system, :types, new_types)
+      end
+  end
 end
