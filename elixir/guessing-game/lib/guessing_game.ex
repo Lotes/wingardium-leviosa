@@ -1,6 +1,6 @@
 defmodule GuessingGame do
-  def compare(secret_number), do: "Make a guess"
-  def compare(secret_number, :no_guess), do: "Make a guess"
+  def compare(_secret_number), do: "Make a guess"
+  def compare(_secret_number, :no_guess), do: "Make a guess"
   def compare(secret_number, guess)
     when not is_integer(secret_number)
     or not is_integer(guess), do: raise "Invalid input"
