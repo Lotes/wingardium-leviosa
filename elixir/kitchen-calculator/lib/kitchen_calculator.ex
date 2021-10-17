@@ -1,17 +1,23 @@
 defmodule KitchenCalculator do
-  def get_volume(volume_pair) do
-    # Please implement the get_volume/1 function
+  def get_volume({_unit, volume}), do: volume
+
+  def to_milliliter({unit, _} = volume_pair) do
+    milliliter = case unit do
+      :cup -> 240.0
+      :fluid_ounce ->  30.0
+      :teaspoon -> 5.0
+      :tablespoon -> 15.0
+      :milliliter -> 1.0
+    end
+    {:milliliter, get_volume(volume_pair) * milliliter}
   end
 
-  def to_milliliter(volume_pair) do
-    # Please implement the to_milliliter/1 functions
-  end
-
-  def from_milliliter(volume_pair, unit) do
-    # Please implement the from_milliliter/2 functions
+  def from_milliliter({:milliliter, volume}, unit) do
+    {unit, volume / get_volume(to_milliliter({unit, 1}))}
   end
 
   def convert(volume_pair, unit) do
-    # Please implement the convert/2 function
+    to_milliliter(volume_pair)
+    |> from_milliliter(unit)
   end
 end
