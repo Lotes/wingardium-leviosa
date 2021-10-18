@@ -8,7 +8,7 @@ defmodule CollatzConjecture do
   @spec calc(input :: pos_integer()) :: non_neg_integer()
   def calc(input)
     when not is_integer(input)
-    or input === 0, do: raise FunctionClauseError
+    or input === 0, do: raise FunctionClauseError, message: "Wrong argument"
   def calc(input) when input >= 1 do
     Stream.unfold(input, fn x -> {x, step(x)} end)
     |> Stream.take_while(fn x -> x != 1 end)
