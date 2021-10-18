@@ -6,6 +6,20 @@ defmodule CollatzConjecture do
     - if number is even, divide by 2
   """
   @spec calc(input :: pos_integer()) :: non_neg_integer()
-  def calc(input) do
+  def calc(input)
+    when not is_integer(input)
+    or input === 0, do: raise FunctionClauseError
+  def calc(input) when input >= 1 do
+    Stream.unfold(input, fn x -> {x, step(x)} end)
+    |> Stream.take_while(fn x -> x != 1 end)
+    |> Enum.to_list()
+    |> Enum.count()
+  end
+
+  defp step(input) do
+    case Integer.mod(input, 2) do
+      1 ->  input * 3 + 1
+      0 ->  div(input, 2)
+    end
   end
 end
