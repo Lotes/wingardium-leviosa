@@ -10,5 +10,9 @@ defmodule Year do
   """
   @spec leap_year?(non_neg_integer) :: boolean
   def leap_year?(year) do
+    by4   = Integer.mod(year, 4) == 0
+    by100 = Integer.mod(year, 100) == 0
+    by400 = Integer.mod(year, 400) == 0
+    by4 and not(by100 and not by400)
   end
 end
