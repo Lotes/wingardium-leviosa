@@ -14,49 +14,25 @@ body:
     attributes:
       label: Short summary
       description: Summarize your idea in one sentence.
-      placeholder: For example: Banana-driven realtime database with self-financing bitcoin miner.
+      placeholder: |
+        For example: Banana-driven realtime database is running as self-financing bitcoin miner.
     validations:
       required: true
   - type: textarea
     id: description
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
+      label: Description
+      description: Tell the community what your idea is about.
+      placeholder: Tell us what you imagine!
     validations:
       required: true
   - type: dropdown
-    id: version
+    id: intention
     attributes:
-      label: Version
-      description: What version of our software are you running?
+      label: What is the intention or project form of this idea?
       options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
+        - Practicing task for yourself
+        - Library for developers
+        - Application for end-users
     validations:
       required: true
-  - type: dropdown
-    id: browsers
-    attributes:
-      label: What browsers are you seeing the problem on?
-      multiple: true
-      options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true
