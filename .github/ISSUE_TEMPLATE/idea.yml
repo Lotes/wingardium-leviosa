@@ -12,7 +12,7 @@ body:
   - type: input
     id: summary
     attributes:
-      label: Short summary
+      label: Summary
       description: Summarize your idea in one sentence.
       placeholder: |
         For example: Banana-driven realtime database is running as self-financing bitcoin miner.
